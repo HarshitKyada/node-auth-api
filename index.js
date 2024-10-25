@@ -40,14 +40,11 @@ if (!dbURI) {
   console.error("MongoDB URI is not defined in environment variables.");
   process.exit(1); // Exit if the URI is not defined
 }
-
-mongoose.connect(dbURI) // No options needed here
-  .then(() => {
-    console.log("Connected to MongoDB");
-  })
-  .catch((error) => {
-    console.error("MongoDB connection error:", error);
-  });
+mongoose.connect(dbURI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  serverSelectionTimeoutMS: 5000,  // Adjust timeout as needed
+});
 
 // API Routes
 app.use("/items", login);
